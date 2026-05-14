@@ -43,6 +43,14 @@ function groupByCategory<T extends { category: string; amount: number }>(
   }, {});
 }
 
+function formatTooltipValue(value: unknown) {
+  if (typeof value === "number" || typeof value === "string") {
+    return formatCurrency(Number(value));
+  }
+
+  return formatCurrency(0);
+}
+
 export function Reports() {
   const {
     revenues,
@@ -212,11 +220,10 @@ export function Reports() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                 <XAxis dataKey="name" stroke="#a1a1aa" fontSize={12} />
                 <YAxis stroke="#a1a1aa" fontSize={12} />
+
                 <Tooltip
                   cursor={{ fill: "#18181b" }}
-                  formatter={(value: number | string) =>
-                    formatCurrency(Number(value))
-                  }
+                  formatter={formatTooltipValue}
                   contentStyle={{
                     backgroundColor: "#09090b",
                     border: "1px solid #27272a",
@@ -224,6 +231,7 @@ export function Reports() {
                     color: "#fff",
                   }}
                 />
+
                 <Bar dataKey="valor" radius={[8, 8, 0, 0]} fill="#22c55e" />
               </BarChart>
             </ResponsiveContainer>
@@ -261,9 +269,7 @@ export function Reports() {
                   </Pie>
 
                   <Tooltip
-                    formatter={(value: number | string) =>
-                      formatCurrency(Number(value))
-                    }
+                    formatter={formatTooltipValue}
                     contentStyle={{
                       backgroundColor: "#09090b",
                       border: "1px solid #27272a",
@@ -291,6 +297,7 @@ export function Reports() {
                     backgroundColor: chartColors[index % chartColors.length],
                   }}
                 />
+
                 <span className="text-sm text-zinc-400">
                   {item.name}:{" "}
                   <strong className="text-white">
