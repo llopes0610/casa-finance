@@ -7,6 +7,10 @@ import { z } from "zod";
 import { FormInput } from "../components/form/FormInput";
 import { FormSelect } from "../components/form/FormSelect";
 import { Card } from "../components/ui/Card";
+import {
+  revenueCategories,
+  toSelectOptions,
+} from "../constants/categories";
 import { useFinance } from "../contexts/FinanceContext";
 import { formatCurrency, formatDate } from "../utils/formatters";
 
@@ -20,19 +24,7 @@ const revenueSchema = z.object({
 type RevenueFormInput = z.input<typeof revenueSchema>;
 type RevenueFormData = z.output<typeof revenueSchema>;
 
-const categories = [
-  "Salário",
-  "Bônus",
-  "Renda extra",
-  "Freelance",
-  "Premiação",
-  "Outros",
-];
-
-const categoryOptions = categories.map((category) => ({
-  label: category,
-  value: category,
-}));
+const categoryOptions = toSelectOptions(revenueCategories);
 
 export function Revenues() {
   const {
@@ -257,7 +249,7 @@ export function Revenues() {
             >
               <option value="">Todas as categorias</option>
 
-              {categories.map((category) => (
+              {revenueCategories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>

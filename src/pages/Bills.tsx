@@ -14,6 +14,11 @@ import { z } from "zod";
 import { FormInput } from "../components/form/FormInput";
 import { FormSelect } from "../components/form/FormSelect";
 import { Card } from "../components/ui/Card";
+import {
+  billCategories,
+  toSelectOptions,
+} from "../constants/categories";
+import { billStatusOptions } from "../constants/options";
 import { useFinance } from "../contexts/FinanceContext";
 import { formatCurrency, formatDate } from "../utils/formatters";
 
@@ -28,34 +33,7 @@ const billSchema = z.object({
 type BillFormInput = z.input<typeof billSchema>;
 type BillFormData = z.output<typeof billSchema>;
 
-const categories = [
-  "Aluguel",
-  "Energia",
-  "Água",
-  "Internet",
-  "Mercado",
-  "Cartão",
-  "Transporte",
-  "Educação",
-  "Saúde",
-  "Outros",
-];
-
-const categoryOptions = categories.map((category) => ({
-  label: category,
-  value: category,
-}));
-
-const statusOptions = [
-  {
-    label: "Pendente",
-    value: "pending",
-  },
-  {
-    label: "Pago",
-    value: "paid",
-  },
-];
+const categoryOptions = toSelectOptions(billCategories);
 
 export function Bills() {
   const {
@@ -178,7 +156,8 @@ export function Bills() {
         <div>
           <h1 className="text-2xl font-bold text-white">Contas a pagar</h1>
           <p className="mt-1 text-sm text-zinc-400">
-            Organize vencimentos, valores, status de pagamento e contas recorrentes.
+            Organize vencimentos, valores, status de pagamento e contas
+            recorrentes.
           </p>
         </div>
 
@@ -258,7 +237,7 @@ export function Bills() {
 
               <FormSelect
                 label="Status"
-                options={statusOptions}
+                options={billStatusOptions}
                 error={errors.status?.message}
                 className="focus:border-red-500"
                 {...register("status")}
@@ -312,7 +291,7 @@ export function Bills() {
             >
               <option value="">Todas as categorias</option>
 
-              {categories.map((category) => (
+              {billCategories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -325,8 +304,12 @@ export function Bills() {
               className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition focus:border-red-500"
             >
               <option value="">Todos os status</option>
-              <option value="pending">Pendente</option>
-              <option value="paid">Pago</option>
+
+              {billStatusOptions.map((status) => (
+                <option key={status.value} value={status.value}>
+                  {status.label}
+                </option>
+              ))}
             </select>
           </div>
 

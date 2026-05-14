@@ -15,6 +15,11 @@ import { z } from "zod";
 import { FormInput } from "../components/form/FormInput";
 import { FormSelect } from "../components/form/FormSelect";
 import { Card } from "../components/ui/Card";
+import {
+  emergencyCategories,
+  toSelectOptions,
+} from "../constants/categories";
+import { emergencyPriorityOptions } from "../constants/options";
 import { useFinance } from "../contexts/FinanceContext";
 import type { EmergencyPriority } from "../types/emergency-expense";
 import { formatCurrency, formatDate } from "../utils/formatters";
@@ -30,34 +35,7 @@ const emergencyExpenseSchema = z.object({
 type EmergencyExpenseFormInput = z.input<typeof emergencyExpenseSchema>;
 type EmergencyExpenseFormData = z.output<typeof emergencyExpenseSchema>;
 
-const categories = [
-  "Saúde",
-  "Casa",
-  "Transporte",
-  "Família",
-  "Trabalho",
-  "Outros",
-];
-
-const categoryOptions = categories.map((category) => ({
-  label: category,
-  value: category,
-}));
-
-const priorityOptions = [
-  {
-    label: "Baixa",
-    value: "low",
-  },
-  {
-    label: "Média",
-    value: "medium",
-  },
-  {
-    label: "Alta",
-    value: "high",
-  },
-];
+const categoryOptions = toSelectOptions(emergencyCategories);
 
 const priorityLabels: Record<EmergencyPriority, string> = {
   low: "Baixa",
@@ -269,7 +247,7 @@ export function Emergencies() {
 
               <FormSelect
                 label="Prioridade"
-                options={priorityOptions}
+                options={emergencyPriorityOptions}
                 error={errors.priority?.message}
                 className="focus:border-orange-500"
                 {...register("priority")}
@@ -333,7 +311,7 @@ export function Emergencies() {
             >
               <option value="">Todas as categorias</option>
 
-              {categories.map((category) => (
+              {emergencyCategories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -346,9 +324,12 @@ export function Emergencies() {
               className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition focus:border-orange-500"
             >
               <option value="">Todas as prioridades</option>
-              <option value="low">Baixa</option>
-              <option value="medium">Média</option>
-              <option value="high">Alta</option>
+
+              {emergencyPriorityOptions.map((priority) => (
+                <option key={priority.value} value={priority.value}>
+                  {priority.label}
+                </option>
+              ))}
             </select>
           </div>
 

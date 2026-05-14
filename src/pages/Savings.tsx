@@ -14,6 +14,10 @@ import { z } from "zod";
 import { FormInput } from "../components/form/FormInput";
 import { FormSelect } from "../components/form/FormSelect";
 import { Card } from "../components/ui/Card";
+import {
+  savingGoalCategories,
+  toSelectOptions,
+} from "../constants/categories";
 import { useFinance } from "../contexts/FinanceContext";
 import { formatCurrency, formatDate } from "../utils/formatters";
 
@@ -32,20 +36,7 @@ const savingGoalSchema = z.object({
 type SavingGoalFormInput = z.input<typeof savingGoalSchema>;
 type SavingGoalFormData = z.output<typeof savingGoalSchema>;
 
-const categories = [
-  "Segurança",
-  "Família",
-  "Casa",
-  "Viagem",
-  "Educação",
-  "Saúde",
-  "Outros",
-];
-
-const categoryOptions = categories.map((category) => ({
-  label: category,
-  value: category,
-}));
+const categoryOptions = toSelectOptions(savingGoalCategories);
 
 export function Savings() {
   const {
@@ -330,7 +321,7 @@ export function Savings() {
             >
               <option value="">Todas as categorias</option>
 
-              {categories.map((category) => (
+              {savingGoalCategories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
