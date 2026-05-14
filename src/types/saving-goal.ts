@@ -5,4 +5,5 @@ export type SavingGoal = {
   currentAmount: number;
   category: string;
   deadline: string;
+  createdAt?: string;
 };

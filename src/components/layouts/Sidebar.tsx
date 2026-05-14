@@ -24,7 +24,7 @@ const menuItems = [
   {
     label: "Contas a pagar",
     icon: CreditCard,
-    path: "/contas-a-pagar",
+    path: "/contas",
   },
   {
     label: "Poupança",

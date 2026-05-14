@@ -7,4 +7,5 @@ export type Bill = {
   category: string;
   dueDate: string;
   status: BillStatus;
+  createdAt?: string;
 };

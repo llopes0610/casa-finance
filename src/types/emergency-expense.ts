@@ -7,4 +7,5 @@ export type EmergencyExpense = {
   category: string;
   priority: EmergencyPriority;
   date: string;
+  createdAt?: string;
 };
