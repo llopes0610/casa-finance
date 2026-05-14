@@ -20,6 +20,8 @@ import {
 } from "../constants/categories";
 import { useFinance } from "../contexts/FinanceContext";
 import { formatCurrency, formatDate } from "../utils/formatters";
+import { FilterInput } from "../components/filters/FilterInput";
+import { FilterSelect } from "../components/filters/FilterSelect";
 
 const savingGoalSchema = z.object({
   title: z.string().min(3, "Informe um nome válido para a meta"),
@@ -305,29 +307,23 @@ export function Savings() {
             </p>
           </div>
 
-          <div className="mb-6 grid gap-3 md:grid-cols-2">
-            <input
-              type="text"
-              placeholder="Buscar por meta..."
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-blue-500"
-            />
+         <div className="mb-6 grid gap-3 md:grid-cols-2">
+  <FilterInput
+    type="text"
+    placeholder="Buscar por meta..."
+    value={search}
+    onChange={(event) => setSearch(event.target.value)}
+    className="focus:border-blue-500"
+  />
 
-            <select
-              value={selectedCategory}
-              onChange={(event) => setSelectedCategory(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-500"
-            >
-              <option value="">Todas as categorias</option>
-
-              {savingGoalCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
+  <FilterSelect
+    placeholder="Todas as categorias"
+    value={selectedCategory}
+    onChange={(event) => setSelectedCategory(event.target.value)}
+    options={categoryOptions}
+    className="focus:border-blue-500"
+  />
+</div>
 
           <div className="space-y-4">
             {filteredSavingGoals.map((goal) => {

@@ -3,6 +3,8 @@ import { Pencil, PlusCircle, Trash2, XCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { FilterInput } from "../components/filters/FilterInput";
+import { FilterSelect } from "../components/filters/FilterSelect";
 
 import { FormInput } from "../components/form/FormInput";
 import { FormSelect } from "../components/form/FormSelect";
@@ -234,28 +236,22 @@ export function Revenues() {
           </div>
 
           <div className="mb-6 grid gap-3 md:grid-cols-2">
-            <input
-              type="text"
-              placeholder="Buscar por descrição..."
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-emerald-500"
-            />
+  <FilterInput
+    type="text"
+    placeholder="Buscar por descrição..."
+    value={search}
+    onChange={(event) => setSearch(event.target.value)}
+    className="focus:border-emerald-500"
+  />
 
-            <select
-              value={selectedCategory}
-              onChange={(event) => setSelectedCategory(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-500"
-            >
-              <option value="">Todas as categorias</option>
-
-              {revenueCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
+  <FilterSelect
+    placeholder="Todas as categorias"
+    value={selectedCategory}
+    onChange={(event) => setSelectedCategory(event.target.value)}
+    options={categoryOptions}
+    className="focus:border-emerald-500"
+  />
+</div>
 
           <div className="overflow-hidden rounded-xl border border-zinc-800">
             <table className="w-full border-collapse">

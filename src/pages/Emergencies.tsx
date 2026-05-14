@@ -23,6 +23,8 @@ import { emergencyPriorityOptions } from "../constants/options";
 import { useFinance } from "../contexts/FinanceContext";
 import type { EmergencyPriority } from "../types/emergency-expense";
 import { formatCurrency, formatDate } from "../utils/formatters";
+import { FilterInput } from "../components/filters/FilterInput";
+import { FilterSelect } from "../components/filters/FilterSelect";
 
 const emergencyExpenseSchema = z.object({
   description: z.string().min(3, "Informe uma descrição válida"),
@@ -295,43 +297,31 @@ export function Emergencies() {
             </p>
           </div>
 
-          <div className="mb-6 grid gap-3 md:grid-cols-3">
-            <input
-              type="text"
-              placeholder="Buscar por descrição..."
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
-            />
+         <div className="mb-6 grid gap-3 md:grid-cols-3">
+  <FilterInput
+    type="text"
+    placeholder="Buscar por descrição..."
+    value={search}
+    onChange={(event) => setSearch(event.target.value)}
+    className="focus:border-orange-500"
+  />
 
-            <select
-              value={selectedCategory}
-              onChange={(event) => setSelectedCategory(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition focus:border-orange-500"
-            >
-              <option value="">Todas as categorias</option>
+  <FilterSelect
+    placeholder="Todas as categorias"
+    value={selectedCategory}
+    onChange={(event) => setSelectedCategory(event.target.value)}
+    options={categoryOptions}
+    className="focus:border-orange-500"
+  />
 
-              {emergencyCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={selectedPriority}
-              onChange={(event) => setSelectedPriority(event.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-white outline-none transition focus:border-orange-500"
-            >
-              <option value="">Todas as prioridades</option>
-
-              {emergencyPriorityOptions.map((priority) => (
-                <option key={priority.value} value={priority.value}>
-                  {priority.label}
-                </option>
-              ))}
-            </select>
-          </div>
+  <FilterSelect
+    placeholder="Todas as prioridades"
+    value={selectedPriority}
+    onChange={(event) => setSelectedPriority(event.target.value)}
+    options={emergencyPriorityOptions}
+    className="focus:border-orange-500"
+  />
+</div>
 
           <div className="overflow-hidden rounded-xl border border-zinc-800">
             <table className="w-full border-collapse">
