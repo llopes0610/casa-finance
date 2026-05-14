@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["ES2020"],
+    "lib": ["ES2020", "DOM"],
 
     "module": "Node16",
     "moduleResolution": "Node16",
 
     "rootDir": "src",
     "outDir": "dist",
+
+    "types": ["node"],
 
     "allowJs": false,
     "strict": true,
