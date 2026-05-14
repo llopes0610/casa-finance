@@ -8,9 +8,6 @@
     "build": "tsc",
     "start": "node dist/server.js"
   },
-   "engines": {
-    "node": "22.x"
-  },
   "keywords": [],
   "author": "Lucas Lopes",
   "license": "ISC",
